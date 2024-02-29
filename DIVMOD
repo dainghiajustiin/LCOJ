@@ -1,0 +1,135 @@
+/* TRAN DAI NGHIA */
+#include<bits/stdc++.h>
+#define ull unsigned long long
+#define int long long
+#define db double
+#define str string
+#define MOD 1000000007
+#define Birthday 15012007
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define Task ""
+//#pragma GCC target ("avx2")
+//#pragma GCC optimization ("03")
+//#pragma GCC optimization ("unroll-loops")
+using namespace std;
+
+bool SmallerOrEqual( str a, str b ){
+    if( a.size() > b.size() ) return 0;
+    if( a.size() < b.size() ) return 1;
+
+    for( int i = 0; i < a.size(); i++ ){
+        if( a[i] > b[i] ) return 0;
+        if( a[i] < b[i] ) return 1;
+    }
+
+    return 1;
+}
+
+str Plus( str A, str B ){
+    int Memory = 0;
+    str res;
+
+    int Max = A.size();
+    int Min = B.size();
+
+    for( int i = 0; i < Min; i++ ){
+        int Sum = (int)( A[Max - 1 - i] - '0' ) + (int)( B[Min - 1 - i] - '0' ) + Memory;
+        res = (char)( Sum%10 + 48 ) + res;
+        Memory = Sum/10;
+    }
+    for( int i = Min; i < Max; i++ ){
+        int Sum = (int)( A[Max - 1 - i] - '0' ) + Memory;
+        res = (char)( Sum%10 + 48 ) + res;
+        Memory = Sum/10;
+    }
+
+    if( Memory ) res = '1' + res;
+
+    while( res[0] == '0' ) res.erase( res.begin() );
+
+    if( !res.size() ) res = '0';
+
+    return res;
+}
+
+str Minus( str A, str B ){
+    int Memory = 0;
+    str res;
+
+    int Max = A.size();
+    int Min = B.size();
+
+    for( int i = 0; i < Min; i++ ){
+        int Difference = (int)( A[Max - 1 - i] - '0' ) - (int)( B[Min - 1 - i] - '0' ) - Memory;
+
+        if( Difference < 0 ){
+            Memory = 1;
+            res = (char)( Difference + 58 ) + res;
+        }
+        else{
+            Memory = 0;
+            res = (char)( Difference + 48 ) + res;
+        }
+    }
+    for( int i = Min; i < Max; i++ ){
+        int Difference = (int)( A[Max - 1 - i] - '0' ) - Memory;
+
+        if( Difference < 0 ){
+            Memory = 1;
+            res = (char)( Difference + 58 ) + res;
+        }
+        else{
+            Memory = 0;
+            res = (char)( Difference + 48 ) + res;
+        }
+    }
+
+    while( res[0] == '0' ) res.erase( res.begin() );
+
+    if( !res.size() ) res = '0';
+
+    return res;
+}
+
+str n, k;
+str p, r;
+
+void DIVMOD(){
+
+    for( int i = 0; i < n.size(); i++ ){
+        r += n[i];
+
+        int num = 0;
+        str numk = k;
+
+        while( SmallerOrEqual( numk, r ) ){
+            num++;
+            numk = Plus( numk, k );
+        }
+
+        p += (char)( num + 48 );
+        r = Minus( r, Minus( numk, k ) );
+    }
+
+    while( p[0] == '0' ) p.erase( p.begin() );
+    if( !p.size() ) p = "0";
+
+    while( r[0] == '0' ) r.erase( r.begin() );
+    if( !r.size() ) r = "0";
+
+    cout << p << ' ' << r;
+
+}
+
+signed main(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	cin >> n >> k;
+
+	DIVMOD();
+}
