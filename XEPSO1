@@ -1,0 +1,91 @@
+/*      Today is 29.02.2024
+    Do your best because tomorrow will be better!
+                                sign
+                               Justiin
+*/
+
+#include<bits/stdc++.h>
+#define int long long
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define Task ""
+#define bit(x) (1 << (x))
+
+using namespace std;
+
+using ll = long long;
+using str = string;
+using pii = pair<int,int>;
+using db = double;
+
+const int MOD = 1e9 + 7;
+const int inf = 2e18;
+
+//Link:
+//Program:
+
+//Begin
+
+int dp[45], t;
+
+int Max(int x){
+    int res = 0;
+
+    if(x&1){
+        res = 7;
+        x -= 3;
+        while(x){
+            res = res * 10 + 1;
+            x -= 2;
+        }
+    }
+    else{
+        while(x){
+            res = res * 10 + 1;
+            x -= 2;
+        }
+    }
+
+    return res;
+}
+
+int Min(int id){
+    int res = min({ dp[id - 2]*10 + 1, dp[id - 3]*10 + 7, dp[id - 4]*10 + 4, dp[id - 5]*10 + 2, dp[id - 6]*10, dp[id - 7]*10 + 8 });
+
+    return res;
+}
+
+void Case(){
+    int n;
+    cin >> n;
+
+    cout << dp[n] << ' ' << Max(n) << el;
+}
+
+
+signed main(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	dp[2] = 1;
+	dp[3] = 7;
+	dp[4] = 4;
+	dp[5] = 2;
+	dp[6] = 6;
+	dp[7] = 8;
+	dp[8] = 10;
+
+	for(int i = 9; i <= 39; i++) dp[i] = Min(i);
+
+	cin >> t;
+
+	while(t--) Case();
+
+
+    return 0;
+}
+
+// End.
