@@ -1,0 +1,56 @@
+/* TRAN DAI NGHIA */
+#include<bits/stdc++.h>
+#define uns unsigned
+#define int long long
+#define db double
+#define str string
+#define MOD 1000000007
+#define Birthday 15012007
+#define first fi
+#define second se
+#define pb push_back
+#define el '\n'
+#define Task ""
+using namespace std;
+
+int t;
+
+void Case(){
+    const int N = 5e4 + 7;
+    int a[N], ps[N];
+    int f[N];
+    int n;
+    int ans = 0;
+
+    cin >> n;
+    for(int i = 1; i <= n; i++ ) cin >> a[i], ps[i] = ps[i-1] + a[i] ;
+    
+    int cost = a[n];
+
+    for( int i = n; i >= 1; i-- ){
+        cost = max( cost, a[i] );
+        f[i] = cost;
+    }
+
+    for( int i = 1; i <= n; i++ ) f[i] += f[i - 1];
+    for( int i = 1; i <= n; i++ ) ans = max( f[n] - f[i - 1] - ( ps[n] - ps[i - 1] ), ans );
+
+    cout << ans << el;
+}
+
+
+
+signed main(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
+
+	cin >> t;
+
+	while( t-- ) Case();
+
+
+	return 0;
+}
+
+
+// biet yeu sao cho vua ?
