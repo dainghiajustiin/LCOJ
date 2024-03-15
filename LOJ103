@@ -1,0 +1,74 @@
+/*      Today is 14.03.2024
+    Do your best because tomorrow will be better!
+                                sign
+                               Justiin
+*/
+
+#include<bits/stdc++.h>
+#define int long long
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define Task ""
+#define bit(x) (1 << (x))
+
+using namespace std;
+
+using ll = long long;
+using str = string;
+using pii = pair<int,int>;
+using db = double;
+
+const int MOD = 1e9 + 7;
+const int inf = 2e18;
+
+//Link:
+//Program:
+
+//Begin
+
+const int len = 1e6 + 7;
+const int base = 137;
+const int MM = 1ll * MOD * MOD;
+
+int hashB, H[len], hashA[len];
+str a, b;
+int ans = 0;
+
+bool check( int u, int v ){
+    if( (hashA[v] - hashA[u - 1] * H[v - u + 1] + MM) % MOD == hashB ) return 1;
+
+    return 0;
+}
+
+signed main(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+    cin >> a >> b;
+
+    int n = a.size(), m = b.size();
+    a = ' ' + a;
+    b = ' ' + b;
+
+    H[0] = 1;
+    for(int i = 1; i <= n; i++) H[i] = H[i - 1] * base % MOD;
+
+    hashA[0] = 0;
+    for(int i = 1; i <= n; i++) hashA[i] = ( hashA[i - 1] * base + a[i] ) % MOD;
+
+    hashB = 0;
+    for(int i = 1; i <= m; i++) hashB = ( hashB * base + b[i] ) % MOD;
+
+    for(int i = m; i <= n; i++){
+        if(check( i - m + 1, i )) ans++;
+    }
+
+    cout << ans;
+
+    return 0;
+}
+
+// End.
